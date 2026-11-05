@@ -15,9 +15,9 @@ import { authClient } from "@/lib/auth-client";
 
 const navItems = [
   { icon: House, label: "Overview", href: "/dashboard" },
-  { icon: CodePullRequest, label: "My Request", href: "/request" },
-  { icon: CirclePlus, label: "Add Pet", href: "/add-pet" },
-  { icon: SquareListUl, label: "My Listings", href: "/my-listings" },
+  { icon: CodePullRequest, label: "My Request", href: "/dashboard/request" },
+  { icon: CirclePlus, label: "Add Pet", href: "/dashboard/add-pet" },
+  { icon: SquareListUl, label: "My Listings", href: "/dashboard/my-listings" },
   
 ];
 
