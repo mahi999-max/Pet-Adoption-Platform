@@ -3,6 +3,7 @@ import "./globals.css";
 import AppNavbar from "@/components/AppNavbar";
 import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
+import { AdoptRequestsProvider } from "@/components/AdoptRequestsProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +26,7 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col"><Toaster position="top-center" richColors /><AppNavbar></AppNavbar>{children}<Footer></Footer></body>
+      <body className="min-h-full flex flex-col"><Toaster position="top-center" richColors /><AdoptRequestsProvider><AppNavbar></AppNavbar>{children}<Footer></Footer></AdoptRequestsProvider></body>
     </html>
   );
 }

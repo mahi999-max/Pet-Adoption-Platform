@@ -1,5 +1,5 @@
 import { getAllPets } from "@/lib/getUser";
-import PetCard from "./Petcard";
+import PetsExplorer from "@/components/PetsExplorer";
 
 /* Save as: src/app/pets/page.jsx */
 
@@ -17,22 +17,18 @@ const AllPetsPage = async () => {
           >
             Find your new best friend
           </h1>
-          <p className="mt-2 text-[#231B4D]/70">
-            {allPet.length} {allPet.length === 1 ? "pet is" : "pets are"} waiting for a home.
-          </p>
+          <p className="mt-2 text-[#231B4D]/70">Search by name or filter by species to find the right match.</p>
         </div>
 
-        {allPet.length === 0 ? (
-          <p className="mt-16 text-center text-lg text-[#231B4D]/70">
-            No pets found right now. Please check back soon.
-          </p>
-        ) : (
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {allPet.map((pet, i) => (
-              <PetCard key={pet._id} pet={pet} index={i} />
-            ))}
-          </div>
-        )}
+        <div className="mt-10">
+          {allPet.length === 0 ? (
+            <p className="mt-16 text-center text-lg text-[#231B4D]/70">
+              No pets found right now. Please check back soon.
+            </p>
+          ) : (
+            <PetsExplorer pets={allPet} />
+          )}
+        </div>
       </div>
     </main>
   );
