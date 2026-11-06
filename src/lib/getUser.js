@@ -3,7 +3,7 @@ import { authClient } from "@/lib/auth-client" // import the auth client
 const { data: session, error } = await authClient.getSession()
 export const userSession=session
 
-const apiUrl=process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
+const apiUrl=process.env.NEXT_PUBLIC_API_URL || "https://pet-adoption-platform-server-plum.vercel.app"
 
 export const getAllPets=async()=>{
     const res=await fetch(`${apiUrl}/allPets`)
