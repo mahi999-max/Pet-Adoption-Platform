@@ -393,87 +393,57 @@ export default function MyListingsPage() {
 
 
   async function handleRequestAction(request, status) {
-
     setRequestBusyId(request._id);
 
-
-
     try {
-
       const result = await updateAdoptionRequest(
-
         request._id,
-
         status,
-
         email
-
       );
-
-
 
       if (!result?.acknowledged || result.modifiedCount === 0) {
-
-        throw new Error("Could not update request.");
-
+        throw new Error(result?.message || "Could not update request.");
       }
 
+      if (status === "approved") {
+        toast.success(
+          "Request approved. All other pending requests were canceled."
+        );
 
-
-      toast.success(
-
-        status === "approved"
-
-          ? "Adoption request approved!"
-
-          : "Adoption request canceled!"
-
-      );
-
-
-
-      const remainingRequests = requests.filter(
-
-        (item) => item._id !== request._id
-
-      );
-
-
-
-      setRequests(remainingRequests);
-
-
-
-      // একই Pet-এর আর কোনো pending request না থাকলে
-
-      // Requests button সরিয়ে দেবে।
-
-      if (remainingRequests.length === 0) {
-
+        setRequests([]);
         setPendingPetIds((prev) => {
-
           const updated = new Set(prev);
-
           updated.delete(String(request.petId));
-
           return updated;
-
         });
 
+        // Approve হলে modal বন্ধ হবে।
+        setRequestPet(null);
+      } else {
+        // Cancel করলে শুধু এই request সরবে; modal খোলা থাকবে।
+        toast.success("Adoption request canceled.");
+
+        const remainingRequests = requests.filter(
+          (item) => item._id !== request._id
+        );
+
+        setRequests(remainingRequests);
+
+        if (remainingRequests.length === 0) {
+          setPendingPetIds((prev) => {
+            const updated = new Set(prev);
+            updated.delete(String(request.petId));
+            return updated;
+          });
+        }
       }
-
     } catch (error) {
-
-      toast.error(error.message);
-
+      toast.error(error.message || "Could not update request.");
     } finally {
-
       setRequestBusyId(null);
-
     }
-
   }
-
 
   useEffect(() => {
     if (!email) return;
