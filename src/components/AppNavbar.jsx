@@ -14,10 +14,9 @@ import {
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
 
-const links = [
+const baseLinks = [
   { label: "Home", href: "/" },
   { label: "All pets", href: "/pets" },
-  { label: "Dashboard", href: "/dashboard" },
 ];
 
 export default function AppNavbar() {
@@ -32,6 +31,10 @@ export default function AppNavbar() {
 
   const isActive = (href) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
   const { data: session, isPending } = authClient.useSession();
+  // Dashboard শুধু লগইন অবস্থায় দেখাবে
+  const links = session?.user
+    ? [...baseLinks, { label: "Dashboard", href: "/dashboard" }]
+    : baseLinks;
 
   return (
     <nav
@@ -99,8 +102,7 @@ export default function AppNavbar() {
                   authClient.signOut({
                     fetchOptions: {
                       onSuccess: () => {
-                        router.push("/");
-                        router.refresh();
+                        window.location.href = "/";
                       },
                     },
                   })
