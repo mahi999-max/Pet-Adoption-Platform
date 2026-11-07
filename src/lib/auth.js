@@ -36,4 +36,8 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
+    trustedOrigins: [
+    "https://pet-adoption-platform-x5ur.vercel.app",
+    "http://localhost:3000",
+  ]
 });
